@@ -133,3 +133,4 @@ dist
 # build output
 dist
 storybook-static
+.DS_Store

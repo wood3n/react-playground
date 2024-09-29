@@ -1,3 +1,6 @@
+/// <reference path="node_modules/@types/react/index.d.ts" />
+/// <reference path="node_modules/@types/react-dom/index.d.ts" />
+
 // CSS modules
 type CSSModuleClasses = Readonly<Record<string, string>>;
 

@@ -18,5 +18,6 @@ export default antfu({
     "no-console": 0,
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/method-signature-style": 0,
+    "import/no-webpack-loader-syntax": 0,
   },
 });
