@@ -1,8 +1,9 @@
-import modules from "!./module.d.ts?raw";
-import Editor, { type Monaco } from "@monaco-editor/react";
+import Editor, { type Monaco, type OnMount } from "@monaco-editor/react";
 import { shikiToMonaco } from "@shikijs/monaco";
+import { setupTypeAcquisition } from "@typescript/ata";
 import React from "react";
 import { createHighlighter } from "shiki";
+import ts from "typescript";
 
 const defaultCode = `import React from 'react';
 
@@ -10,15 +11,6 @@ const App = () => {
   return <div>App</div>
 }
 `;
-
-async function getDtsFile() {
-  return fetch("https://unpkg.com/@types/react@17.0.39/index.d.ts").then(
-    (resp) => {
-      return resp.text();
-    },
-    () => { },
-  );
-}
 
 function App() {
   const handleEditorWillMount = async (monaco: Monaco) => {
@@ -80,7 +72,6 @@ function App() {
       moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       module: monaco.languages.typescript.ModuleKind.CommonJS,
       noEmit: true,
-      typeRoots: ["node_modules/@types"],
     });
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -88,13 +79,26 @@ function App() {
       noSyntaxValidation: false,
     });
 
-    const reactTypes = await getDtsFile();
-
-    if (reactTypes) {
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(reactTypes, "file:///node_modules/react/index.d.ts");
-    }
-
     shikiToMonaco(highlighter, monaco);
+  };
+
+  const handleMount: OnMount = (editor, monaco) => {
+    const ata = setupTypeAcquisition({
+      projectName: "React Playground",
+      typescript: ts,
+      logger: console,
+      delegate: {
+        receivedFile: (code, path) => {
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(code, `file://${path}`);
+        },
+      },
+    });
+
+    editor.onDidChangeModelContent(() => {
+      ata(editor.getValue());
+    });
+
+    ata(defaultCode);
   };
 
   return (
@@ -105,8 +109,11 @@ function App() {
       defaultValue={defaultCode}
       path="file:///main.tsx"
       beforeMount={handleEditorWillMount}
+      onMount={handleMount}
       options={{
         tabSize: 2,
+        formatOnType: true,
+        formatOnPaste: true,
       }}
     />
   );

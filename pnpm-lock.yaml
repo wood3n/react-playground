@@ -11,6 +11,9 @@ dependencies:
   '@shikijs/monaco':
     specifier: ^1.21.0
     version: 1.21.0
+  '@typescript/ata':
+    specifier: ^0.9.7
+    version: 0.9.7(typescript@5.6.2)
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -1255,6 +1258,14 @@ packages:
       '@typescript-eslint/types': 8.7.0
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@typescript/ata@0.9.7(typescript@5.6.2):
+    resolution: {integrity: sha512-CZx57/XGBKhYZ3ifchbERgUl9J6C7W3XC96ibM7axr7C32mG5dXTyrVAS3ZY88Jxlkvx4AZyZtDJyUuseHQkcQ==}
+    peerDependencies:
+      typescript: '>=4.4.4'
+    dependencies:
+      typescript: 5.6.2
+    dev: false
 
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -5627,7 +5638,6 @@ packages:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
